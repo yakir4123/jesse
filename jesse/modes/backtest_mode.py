@@ -14,8 +14,14 @@ from jesse.routes import router
 from jesse.services import charts
 from jesse.services import quantstats
 from jesse.services import report
-from jesse.services.candle import generate_candle_from_one_minutes, print_candle, candle_includes_price, split_candle, \
-    get_candles, inject_warmup_candles_to_store
+from jesse.services.candle import (
+    generate_candle_from_one_minutes,
+    print_candle,
+    candle_includes_price,
+    split_candle,
+    get_candles,
+    inject_warmup_candles_to_store,
+)
 from jesse.services.file import store_logs
 from jesse.services.validators import validate_routes
 from jesse.store import store
@@ -221,7 +227,6 @@ def _step_simulator(
         config['app']['debug_mode'] = True
 
     begin_time_track = time.time()
-
     key = f"{config['app']['considering_candles'][0][0]}-{config['app']['considering_candles'][0][1]}"
     first_candles_set = candles[key]["candles"]
 
@@ -541,17 +546,17 @@ def generate_outputs(
 
 
 def _skip_simulator(
-    candles: dict,
-    run_silently: bool,
-    hyperparameters: dict = None,
-    generate_charts: bool = False,
-    generate_tradingview: bool = False,
-    generate_quantstats: bool = False,
-    generate_csv: bool = False,
-    generate_json: bool = False,
-    generate_equity_curve: bool = False,
-    generate_hyperparameters: bool = False,
-    generate_logs: bool = False,
+        candles: dict,
+        run_silently: bool,
+        hyperparameters: dict = None,
+        generate_charts: bool = False,
+        generate_tradingview: bool = False,
+        generate_quantstats: bool = False,
+        generate_csv: bool = False,
+        generate_json: bool = False,
+        generate_equity_curve: bool = False,
+        generate_hyperparameters: bool = False,
+        generate_logs: bool = False,
 ) -> dict:
     # In case generating logs is specifically demanded, the debug mode must be enabled.
     if generate_logs:
