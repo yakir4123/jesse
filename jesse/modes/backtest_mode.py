@@ -1,5 +1,4 @@
 import time
-from datetime import datetime
 from typing import Dict, Union, List
 
 import arrow
@@ -28,7 +27,7 @@ from jesse.services import logger
 from jesse.services.failure import register_custom_exception_handler
 from jesse.services.redis import sync_publish, process_status
 from timeloop import Timeloop
-from datetime import timedelta
+from datetime import timedelta, datetime
 from jesse.services.progressbar import Progressbar
 
 
@@ -675,7 +674,7 @@ def simulate_new_candles(candles: dict, candle_index: int, candles_step: int) ->
         exchange = candles[j]["exchange"]
         symbol = candles[j]["symbol"]
 
-        _simulate_price_change_effect__multiple_candles(
+        _simulate_price_change_effect_multiple_candles(
             short_candles, exchange, symbol
         )
 
@@ -704,7 +703,7 @@ def simulate_new_candles(candles: dict, candle_index: int, candles_step: int) ->
                 )
 
 
-def _simulate_price_change_effect__multiple_candles(
+def _simulate_price_change_effect_multiple_candles(
     short_timeframes_candles: np.ndarray, exchange: str, symbol: str
 ) -> None:
     real_candle = np.array(
