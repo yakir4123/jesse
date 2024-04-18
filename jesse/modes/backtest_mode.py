@@ -104,7 +104,8 @@ def run(
         generate_csv=csv,
         generate_json=json,
         generate_equity_curve=True,
-        generate_hyperparameters=True
+        generate_hyperparameters=True,
+        fast_mode=False
     )
 
     if not jh.should_execute_silently():
@@ -565,8 +566,8 @@ def _skip_simulator(
     # add initial balance
     save_daily_portfolio_balance()
 
-    progressbar = Progressbar(length, step=60)
     candles_step = calculate_minimum_candle_step()
+    progressbar = Progressbar(length, step=candles_step)
     for i in range(0, length, candles_step):
         # update time moved to _simulate_price_change_effect__multiple_candles
         # store.app.time = first_candles_set[i][0] + (60_000 * candles_step)
