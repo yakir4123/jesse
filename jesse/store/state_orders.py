@@ -1,6 +1,6 @@
 from typing import List
 
-import pydash
+import fnc
 
 from jesse.config import config
 from jesse.models import Order
@@ -14,11 +14,13 @@ class OrdersState:
         self.to_execute = []
 
         self.storage = {}
+        self.executed_storage = {}
 
         for exchange in config['app']['trading_exchanges']:
             for symbol in config['app']['trading_symbols']:
                 key = f'{exchange}-{symbol}'
                 self.storage[key] = []
+                self.executed_storage[key] = []
 
     def reset(self) -> None:
         """
@@ -84,9 +86,9 @@ class OrdersState:
         key = f'{exchange}-{symbol}'
 
         if use_exchange_id:
-            return pydash.find(self.storage[key], lambda o: o.exchange_id == id)
+            return fnc.find(lambda o: o.exchange_id == id, self.storage[key])
 
-        return pydash.find(self.storage[key], lambda o: o.id == id)
+        return fnc.find(lambda o: o.id == id, reversed(self.storage[key]))
 
     def get_entry_orders(self, exchange: str, symbol: str) -> List[Order]:
         all_orders = self.get_orders(exchange, symbol)
@@ -98,10 +100,8 @@ class OrdersState:
         if p.is_close:
             entry_orders = all_orders.copy()
         else:
-            entry_orders = [o for o in all_orders if o.side == jh.type_to_side(p.type)]
-
-        # exclude cancelled orders
-        entry_orders = [o for o in entry_orders if not o.is_canceled]
+            p_side = jh.type_to_side(p.type)
+            entry_orders = [o for o in all_orders if (o.side == p_side and not o.is_canceled)]
 
         return entry_orders
 
@@ -124,5 +124,21 @@ class OrdersState:
         exit_orders = [o for o in exit_orders if not o.is_canceled]
 
         return exit_orders
+
+    def move_executed_orders(self, exchange: str, symbol: str):
+        executed_orders = []
+        active_orders = []
+
+        key = f'{exchange}-{symbol}'
+        for order in self.storage.get(key, []):
+            if order.is_canceled or order.is_executed:
+                executed_orders.append(order)
+            else:
+                active_orders.append(order)
+
+        self.storage[key] = active_orders
+        if key not in self.executed_storage:
+            self.executed_storage[key] = []
+        self.executed_storage[key] += executed_orders
 
 
