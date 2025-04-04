@@ -1,0 +1,6 @@
+torch==2.6.0
+tqdm==4.67.1
+prettytable==3.16.0
+setuptools==69.5.1
+jesse
+matplotlib
