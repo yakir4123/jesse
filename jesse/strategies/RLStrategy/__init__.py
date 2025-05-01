@@ -10,15 +10,16 @@ class RLStrategy(Strategy):
         self.agent = Agent(...)  # Initialize RL-agent
 
     def should_long(self) -> bool:
-        action = self.agent.select_action(self.get_state())  # Get RL-agent state
-        if action == 1:  # Buy action
-            return True
+        # action = self.agent.select_action(self.get_state())  # Get RL-agent state
+        # if action == 1:  # Buy action
+        #     return True
         return False
 
     def should_short(self) -> bool:
-        action = self.agent.select_action(self.get_state())  # Get RL-agent state
-        if action == 2:  # Sell action
-            return True
+        # TODO: fix
+        # action = self.agent.select_action(self.get_state())  # Get RL-agent state
+        # if action == 2:  # Sell action
+        #     return True
         return False
 
     def go_long(self):
@@ -37,8 +38,11 @@ class RLStrategy(Strategy):
         # Example: using last close, volume and RSI
         close = self.candles[:, 2]
         volume = self.candles[:, 5]
-        rsi = ta.rsi(close, period=14)
+        # rsi = ta.rsi(close, period=14)
 
         # create PyTorch tensor
-        state = torch.tensor([close[-1], volume[-1], rsi[-1]])
+        # state = torch.tensor([close[-1], volume[-1], rsi[-1]])
+        state = {}
+
+
         return state

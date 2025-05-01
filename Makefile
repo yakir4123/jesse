@@ -7,5 +7,4 @@ dev:
 	PYTHONPATH=. uv run python jesse/rl/main.py
 
 test:
-	# TODO: fix rl test
 	uv run python -m pytest tests/test_rl_strategy.py::TestRLStrategy::test_rl_strategy
