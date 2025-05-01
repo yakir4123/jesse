@@ -53,15 +53,15 @@ class RLStrategy(Strategy):
         # Market state
         # Example: using last close, volume and RSI
         close = self.candles[:, 2]
-        # volume = self.candles[:, 5]
-        # rsi = ta.rsi(close, period=14)
+        volume = self.candles[:, 5]
+        rsi = ta.rsi(close, period=14)
 
         # create PyTorch tensor
-        # state = torch.tensor([close[-1], volume[-1], rsi[-1]])
-        # state = {}
+        # Now model support only close price prediction
         state = torch.tensor([close[-1]])
 
-
+        # TODO
+        # state = torch.tensor([close[-1], volume[-1], rsi[-1]])
         return state
 
     def lazy_calc_proba(self):
