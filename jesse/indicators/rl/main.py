@@ -1,7 +1,6 @@
 from prettytable import PrettyTable as PrettyTable
-from jesse.rl.utils import load_data, print_stats, plot_multiple_conf_interval
+from jesse.indicators.rl.utils import load_data, print_stats, plot_multiple_conf_interval
 import random
-import os
 
 from Environment import Environment
 from Agent import Agent

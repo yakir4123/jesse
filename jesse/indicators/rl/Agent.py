@@ -1,9 +1,9 @@
 import torch
 import torch.optim as optim
 import torch.nn.functional as F
-from jesse.rl.models import ConvDQN, ConvDuelingDQN
-from jesse.rl.utils import ReplayMemory
-from jesse.rl.utils import Transition
+from jesse.indicators.rl.models import ConvDQN, ConvDuelingDQN
+from jesse.indicators.rl.utils import ReplayMemory
+from jesse.indicators.rl.utils import Transition
 import random
 from tqdm import tqdm
 import re
@@ -74,8 +74,8 @@ class Agent:
         self.DOUBLE = DOUBLE  # to understand if use or do not use a 'Double' model (regularization)
         self.TRAINING = True  # to do not pick random actions during testing
         if torch.backends.mps.is_available():
-            # self.device = torch.device("mps")
-            self.device = torch.device("cpu")
+            self.device = torch.device("mps")
+            # self.device = torch.device("cpu")
         else:
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print("Agent is using device:\t" + str(self.device))

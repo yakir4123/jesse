@@ -1,11 +1,11 @@
 from prettytable import PrettyTable as PrettyTable
-from jesse.rl.utils import load_data, print_stats, plot_multiple_conf_interval
+from jesse.indicators.rl.utils import load_data, print_stats, plot_multiple_conf_interval
 import random
 import warnings
 # from google.colab import drive
 # drive.mount('/content/drive')
-from jesse.rl.Environment import Environment
-from jesse.rl.Agent import Agent
+from jesse.indicators.rl.Environment import Environment
+from jesse.indicators.rl.Agent import Agent
 
 
 def main():

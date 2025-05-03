@@ -1,12 +1,9 @@
 # jesse/strategies/RLStrategy.py
-from typing import List, Dict
 
 import torch
 
 import jesse.indicators as ta
-from jesse.models import Route, Position, Order
-from jesse.rl.Agent import Agent  # import RL agent
-from jesse.store import ClosedTrades
+from jesse.indicators.rl.Agent import Agent  # import RL agent
 from jesse.strategies import Strategy
 
 
